@@ -1,14 +1,20 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  ArrowLeftRight,
   Cloud,
   Code,
   Database,
   FileText,
+  Fingerprint,
+  Hash,
   Image,
+  KeyRound,
   LineChart,
+  Link,
   Lock,
   Mail,
   Palette,
+  Scale,
   Terminal,
 } from "lucide-react";
 
@@ -26,6 +32,12 @@ export const TOOL_LUCIDE_ICONS: Record<string, LucideIcon> = {
   "regex-builder": Terminal,
   "gradient-generator": Palette,
   "base64-encoder": Code,
+  "url-encoder": Link,
+  "jwt-tool": KeyRound,
+  "hash-generator": Hash,
+  "uuid-generator": Fingerprint,
+  "format-converter": ArrowLeftRight,
+  "unit-converter": Scale,
 };
 
 export function getToolLucideIcon(id: string): LucideIcon {
