@@ -273,6 +273,3 @@ export function getToolBySlug(slug: string): ToolDefinition | undefined {
   return TOOLS.find((t) => t.href === `/tools/${slug}`);
 }
 
-export const SOON_SLUGS = TOOLS.filter((t) => t.status === "soon" && t.href.startsWith("/tools/")).map(
-  (t) => t.id,
-);

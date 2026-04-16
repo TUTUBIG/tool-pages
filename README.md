@@ -29,8 +29,30 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Deploy on Cloudflare Pages
+
+This app builds as **static HTML** (`next.config.ts` sets `output: "export"`; output is in `out/`).
+
+### Connect the Git repo (recommended)
+
+1. In the Cloudflare dashboard: **Workers & Pages** → **Create** → **Pages** → connect your Git provider.
+2. Configure the build:
+   - **Build command:** `npm run build`
+   - **Build output directory:** `out`
+   - **Node version:** 20 or newer (set via `NODE_VERSION` environment variable or `.nvmrc` if you use one).
+3. Save and deploy; each push to the chosen branch will rebuild.
+
+### Deploy from your machine (Wrangler)
+
+1. One-time login: `npx wrangler login`
+2. Build: `npm run build`
+3. Deploy: `npm run pages:deploy -- --project-name=YOUR_PAGES_PROJECT_NAME`  
+   (Create the project in the dashboard first, or Wrangler can create it on first deploy depending on your account.)
+
+`wrangler.toml` sets the Pages project name to `tool-pages`; change `name` there if you use a different project slug.
+
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This repository is configured for a **static export**, which also works on any static host. For Vercel, connect the repo and use output directory **`out`** (or adjust the project to run `next build` and deploy the `out` folder as static files).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

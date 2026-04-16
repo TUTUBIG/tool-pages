@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pages:deploy": "wrangler pages deploy out"
   },
   "dependencies": {
     "dompurify": "^3.4.0",
@@ -21,6 +22,7 @@
     "yaml": "^2.8.3"
   },
   "devDependencies": {
+    "wrangler": "^4.42.0",
     "@tailwindcss/postcss": "^4",
     "@types/dompurify": "^3.0.5",
     "@types/node": "^20",

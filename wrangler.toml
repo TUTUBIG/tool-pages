@@ -1,0 +1,5 @@
+# Cloudflare Pages: static output from `next build` (next.config.ts → output: "export")
+# Dashboard: set build command `npm run build` and output directory `out`, or deploy with `npm run pages:deploy`.
+name = "tool-pages"
+pages_build_output_dir = "out"
+compatibility_date = "2025-04-16"
