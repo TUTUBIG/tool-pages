@@ -4,16 +4,18 @@ import Link from "next/link";
 import { Search, X } from "lucide-react";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { TOOLS, type ToolDefinition } from "@/lib/tools";
+import { useHydratedMostUsedToolIds } from "@/hooks/use-hydrated-most-used-tool-ids";
 import { getToolLucideIcon } from "@/lib/tool-lucide-icons";
 import { useSearchModal } from "./search-modal-context";
 
-function matchesQuery(tool: ToolDefinition, q: string) {
+function matchesQuery(tool: ToolDefinition, q: string, mostUsedIds: Set<string>) {
   if (!q.trim()) return false;
   const s = q.trim().toLowerCase();
   return (
     tool.title.toLowerCase().includes(s) ||
     tool.description.toLowerCase().includes(s) ||
-    tool.category.toLowerCase().includes(s)
+    tool.category.toLowerCase().includes(s) ||
+    (s.replace(/\s+/g, "").includes("mostused") && mostUsedIds.has(tool.id))
   );
 }
 
@@ -21,12 +23,14 @@ function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const panelId = useId();
   const [query, setQuery] = useState("");
+  const { ids: mostUsedIds } = useHydratedMostUsedToolIds(999);
 
   const filteredTools = useMemo(() => {
     const q = query.trim();
     if (!q) return [];
-    return TOOLS.filter((t) => matchesQuery(t, q));
-  }, [query]);
+    const mostUsed = new Set(mostUsedIds);
+    return TOOLS.filter((t) => matchesQuery(t, q, mostUsed));
+  }, [query, mostUsedIds]);
 
   const groupedResults = useMemo(() => {
     return filteredTools.reduce(

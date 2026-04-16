@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { ArrowLeft, Zap } from "lucide-react";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { SITE_TAGLINE } from "@/lib/site";
+import { incrementToolUse } from "@/lib/tool-usage";
 import { TOOLS, getToolByHref } from "@/lib/tools";
 import { getToolLucideIcon } from "@/lib/tool-lucide-icons";
 import { SearchTrigger } from "./search-trigger";
@@ -13,6 +14,12 @@ import { SiteHeaderActions } from "./site-header-actions";
 export function ToolShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const current = getToolByHref(pathname);
+
+  useEffect(() => {
+    const tool = getToolByHref(pathname);
+    if (!tool || tool.status !== "live") return;
+    incrementToolUse(tool.id);
+  }, [pathname]);
 
   return (
     <div className="flex h-screen min-h-0 flex-col bg-gradient-to-br from-neutral-50 via-neutral-50 to-neutral-100 font-[family-name:var(--font-inter)] transition-colors dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950">

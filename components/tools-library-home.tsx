@@ -4,32 +4,41 @@ import Link from "next/link";
 import { Zap } from "lucide-react";
 import { GitHubIcon } from "@/components/github-icon";
 import { useMemo, useState } from "react";
-import {
-  FILTER_LABELS,
-  TOOLS,
-  type FilterLabel,
-  type ToolCategory,
-} from "@/lib/tools";
+import { FILTER_LABELS, TOOLS, type FilterLabel, type ToolDefinition } from "@/lib/tools";
+import { useHydratedMostUsedToolIds } from "@/hooks/use-hydrated-most-used-tool-ids";
 import { getToolLucideIcon } from "@/lib/tool-lucide-icons";
 import { SITE_GITHUB_URL, SITE_TAGLINE } from "@/lib/site";
 import { SearchTrigger } from "./search-trigger";
 import { ThemeToggle } from "./theme-toggle";
 
 function matchesFilter(
-  category: ToolCategory,
+  tool: ToolDefinition,
   filter: FilterLabel,
+  mostUsedIds: readonly string[],
 ): boolean {
-  if (filter === "All") return true;
-  return category === filter;
+  if (filter === "Most used") return mostUsedIds.includes(tool.id);
+  return tool.category === filter;
 }
 
 export function ToolsLibraryHome() {
-  const [filter, setFilter] = useState<FilterLabel>("All");
+  const [filter, setFilter] = useState<FilterLabel>("Most used");
+  const { ids: mostUsedIds, usageHydrated, hasUsageRecords } = useHydratedMostUsedToolIds();
 
-  const visible = useMemo(
-    () => TOOLS.filter((t) => matchesFilter(t.category, filter)),
-    [filter],
-  );
+  const visible = useMemo(() => {
+    const filtered = TOOLS.filter((t) => matchesFilter(t, filter, mostUsedIds));
+    if (filter !== "Most used") return filtered;
+    const byId = new Map(filtered.map((t) => [t.id, t]));
+    return mostUsedIds
+      .map((id) => byId.get(id))
+      .filter((t): t is ToolDefinition => t != null);
+  }, [filter, mostUsedIds]);
+
+  const emptyCategoryMessage =
+    filter === "Most used" && !usageHydrated
+      ? "Loading…"
+      : filter === "Most used" && usageHydrated && !hasUsageRecords
+        ? "There is no record in Most used."
+        : "No tools found in this category.";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-neutral-50 to-neutral-100 font-[family-name:var(--font-inter)] transition-colors dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950">
@@ -125,8 +134,8 @@ export function ToolsLibraryHome() {
           </div>
         ) : (
           <div className="py-16 text-center">
-            <p className="text-neutral-500 dark:text-neutral-400">
-              No tools found in this category.
+            <p className="text-neutral-500 dark:text-neutral-400" role="status">
+              {emptyCategoryMessage}
             </p>
           </div>
         )}
