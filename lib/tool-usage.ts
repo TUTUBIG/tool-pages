@@ -1,6 +1,7 @@
 import { MOST_USED_TOOL_IDS, TOOLS } from "./tools";
 
-const STORAGE_KEY = "tools-library-usage-v1";
+const STORAGE_KEY = "toolflow-usage-v1";
+const LEGACY_STORAGE_KEY = "tools-library-usage-v1";
 
 /** Same-tab updates (localStorage does not fire `storage` in the active tab). */
 export const TOOLS_USAGE_CHANGED_EVENT = "tools-usage-changed";
@@ -11,16 +12,9 @@ function isKnownToolId(id: string): boolean {
   return knownIds.has(id);
 }
 
-/** Whether any tool visit counts exist in `localStorage` for this origin. */
-export function hasToolUsageRecords(): boolean {
-  return Object.keys(readUsageCounts()).length > 0;
-}
-
-export function readUsageCounts(): Record<string, number> {
-  if (typeof window === "undefined") return {};
+function parseUsageRaw(raw: string | null): Record<string, number> {
+  if (!raw) return {};
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {};
     const parsed = JSON.parse(raw) as unknown;
     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
     const out: Record<string, number> = {};
@@ -36,13 +30,30 @@ export function readUsageCounts(): Record<string, number> {
   }
 }
 
+/** Whether any tool visit counts exist in `localStorage` for this origin. */
+export function hasToolUsageRecords(): boolean {
+  return Object.keys(readUsageCounts()).length > 0;
+}
+
+export function readUsageCounts(): Record<string, number> {
+  if (typeof window === "undefined") return {};
+  const primary = parseUsageRaw(localStorage.getItem(STORAGE_KEY));
+  if (Object.keys(primary).length > 0) return primary;
+  return parseUsageRaw(localStorage.getItem(LEGACY_STORAGE_KEY));
+}
+
 export function incrementToolUse(toolId: string): void {
   if (typeof window === "undefined") return;
   if (!isKnownToolId(toolId)) return;
-  const counts = readUsageCounts();
+  const counts = { ...readUsageCounts() };
   counts[toolId] = (counts[toolId] ?? 0) + 1;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
+    try {
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
   } catch {
     return;
   }

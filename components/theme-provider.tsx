@@ -13,7 +13,8 @@ import {
 
 export type ResolvedTheme = "light" | "dark";
 
-const STORAGE_KEY = "tools-library-theme";
+const STORAGE_KEY = "toolflow-theme";
+const LEGACY_STORAGE_KEY = "tools-library-theme";
 
 const ThemeContext = createContext<{
   /** Effective theme (manual choice or OS when unset). */
@@ -30,9 +31,18 @@ function applyResolvedTheme(resolved: ResolvedTheme) {
 /** `null` = not set, use system preference. */
 function readStoredPreference(): "light" | "dark" | null {
   try {
-    const v = localStorage.getItem(STORAGE_KEY);
+    let v = localStorage.getItem(STORAGE_KEY);
     if (v === "light" || v === "dark") return v;
-    /* legacy: explicit system or unknown → treat as unset */
+    v = localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (v === "light" || v === "dark") {
+      try {
+        localStorage.setItem(STORAGE_KEY, v);
+        localStorage.removeItem(LEGACY_STORAGE_KEY);
+      } catch {
+        /* ignore */
+      }
+      return v;
+    }
   } catch {
     /* ignore */
   }

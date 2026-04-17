@@ -1,3 +1,5 @@
+import { stripLocaleFromPathname } from "@/lib/i18n";
+
 export type ToolCategory =
   | "Development"
   | "Web3"
@@ -265,8 +267,10 @@ export const TOOLS: ToolDefinition[] = [
 
 const byHref = new Map(TOOLS.map((t) => [t.href, t]));
 
-export function getToolByHref(href: string): ToolDefinition | undefined {
-  return byHref.get(href);
+export function getToolByHref(pathname: string): ToolDefinition | undefined {
+  const parsed = stripLocaleFromPathname(pathname);
+  const pathOnly = parsed?.pathname ?? pathname;
+  return byHref.get(pathOnly);
 }
 
 export function getToolBySlug(slug: string): ToolDefinition | undefined {

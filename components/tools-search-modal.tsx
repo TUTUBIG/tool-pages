@@ -1,25 +1,44 @@
 "use client";
 
-import Link from "next/link";
 import { Search, X } from "lucide-react";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { LocaleLink } from "@/components/locale-link";
+import { useLocale } from "@/components/locale-provider";
+import { getMessages, type Messages } from "@/lib/messages";
 import { TOOLS, type ToolDefinition } from "@/lib/tools";
 import { useHydratedMostUsedToolIds } from "@/hooks/use-hydrated-most-used-tool-ids";
 import { getToolLucideIcon } from "@/lib/tool-lucide-icons";
 import { useSearchModal } from "./search-modal-context";
 
-function matchesQuery(tool: ToolDefinition, q: string, mostUsedIds: Set<string>) {
+function matchesQuery(
+  tool: ToolDefinition,
+  q: string,
+  mostUsedIds: Set<string>,
+  messages: Messages,
+) {
   if (!q.trim()) return false;
   const s = q.trim().toLowerCase();
+  const copy = messages.tools[tool.id];
+  const hay = [
+    copy?.title,
+    copy?.description,
+    tool.title,
+    tool.description,
+    messages.categories[tool.category],
+    tool.category,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
   return (
-    tool.title.toLowerCase().includes(s) ||
-    tool.description.toLowerCase().includes(s) ||
-    tool.category.toLowerCase().includes(s) ||
+    hay.includes(s) ||
     (s.replace(/\s+/g, "").includes("mostused") && mostUsedIds.has(tool.id))
   );
 }
 
 function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
+  const locale = useLocale();
+  const messages = useMemo(() => getMessages(locale), [locale]);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelId = useId();
   const [query, setQuery] = useState("");
@@ -29,8 +48,8 @@ function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
     const q = query.trim();
     if (!q) return [];
     const mostUsed = new Set(mostUsedIds);
-    return TOOLS.filter((t) => matchesQuery(t, q, mostUsed));
-  }, [query, mostUsedIds]);
+    return TOOLS.filter((t) => matchesQuery(t, q, mostUsed, messages));
+  }, [query, mostUsedIds, messages]);
 
   const groupedResults = useMemo(() => {
     return filteredTools.reduce(
@@ -61,9 +80,9 @@ function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
 
   const emptyHint =
     query.trim() === ""
-      ? "Start typing to search all tools"
+      ? messages.site.searchModalStartTyping
       : filteredTools.length === 0
-        ? `No tools found matching "${query}"`
+        ? messages.site.searchModalNoResults.replace("{query}", query)
         : null;
 
   return (
@@ -90,7 +109,7 @@ function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="min-w-0 flex-1 bg-transparent text-lg text-neutral-900 placeholder:text-neutral-400 focus:outline-none dark:text-white dark:placeholder:text-neutral-500"
-              placeholder="Search all tools..."
+              placeholder={messages.site.searchModalPlaceholder}
               type="search"
               autoComplete="off"
             />
@@ -112,13 +131,14 @@ function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
                 {Object.entries(groupedResults).map(([category, categoryTools]) => (
                   <div key={category}>
                     <h3 className="mb-2 px-2 text-xs font-medium tracking-wide text-neutral-500 uppercase dark:text-neutral-400">
-                      {category}
+                      {messages.categories[category as keyof Messages["categories"]]}
                     </h3>
                     <div className="space-y-1">
                       {categoryTools.map((tool) => {
                         const Icon = getToolLucideIcon(tool.id);
+                        const copy = messages.tools[tool.id];
                         return (
-                          <Link
+                          <LocaleLink
                             key={tool.id}
                             href={tool.href}
                             className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800"
@@ -129,13 +149,13 @@ function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="font-medium text-neutral-900 dark:text-white">
-                                {tool.title}
+                                {copy?.title ?? tool.title}
                               </div>
                               <div className="truncate text-sm text-neutral-600 dark:text-neutral-400">
-                                {tool.description}
+                                {copy?.description ?? tool.description}
                               </div>
                             </div>
-                          </Link>
+                          </LocaleLink>
                         );
                       })}
                     </div>
@@ -146,11 +166,7 @@ function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
           </div>
 
           <div className="border-t border-neutral-200 px-4 py-3 text-xs text-neutral-500 dark:border-neutral-700 dark:text-neutral-400">
-            <span>Press </span>
-            <kbd className="rounded border border-neutral-200 bg-neutral-100 px-2 py-0.5 dark:border-neutral-700 dark:bg-neutral-800">
-              ESC
-            </kbd>
-            <span> to close</span>
+            {messages.site.searchModalFooter}
           </div>
         </div>
       </div>
