@@ -14,6 +14,13 @@ export type Messages = {
     /** Use `{query}` as placeholder for the user’s search string. */
     searchModalNoResults: string;
     searchModalFooter: string;
+    searchModalSuggestTitle: string;
+    searchModalSuggestDescription: string;
+    searchModalSuggestEmailLabel: string;
+    toolFeedbackHeading: string;
+    toolFeedbackBody: string;
+    toolFeedbackGitHub: string;
+    toolFeedbackEmail: string;
   };
   filters: {
     "Most used": string;

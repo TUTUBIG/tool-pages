@@ -12,6 +12,7 @@ import { TOOLS, getToolByHref } from "@/lib/tools";
 import { getToolLucideIcon } from "@/lib/tool-lucide-icons";
 import { SearchTrigger } from "./search-trigger";
 import { SiteHeaderActions } from "./site-header-actions";
+import { ToolFeedback } from "./tool-feedback";
 import { ToolflowLogoMark, ToolflowWordmark } from "./toolflow-logo";
 
 export function ToolShell({ children }: { children: ReactNode }) {
@@ -129,6 +130,7 @@ export function ToolShell({ children }: { children: ReactNode }) {
             </header>
           ) : null}
           {children}
+          {current && currentCopy ? <ToolFeedback toolTitle={currentCopy.title} /> : null}
         </main>
       </div>
     </div>

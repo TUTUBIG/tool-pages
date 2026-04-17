@@ -16,6 +16,14 @@ export const zhCN: Messages = {
     searchModalStartTyping: "输入关键字以搜索全部工具",
     searchModalNoResults: "没有与「{query}」匹配的工具",
     searchModalFooter: "按 ESC 关闭",
+    searchModalSuggestTitle: "没找到想要的工具？",
+    searchModalSuggestDescription:
+      "欢迎发邮件说明你的使用场景，我们会阅读并据此考虑后续要上线的工具。",
+    searchModalSuggestEmailLabel: "发邮件给支持团队",
+    toolFeedbackHeading: "反馈",
+    toolFeedbackBody: "发现缺陷、体验不清晰或想要新功能？欢迎在 GitHub 提 issue 或发邮件联系我们。",
+    toolFeedbackGitHub: "在 GitHub 提 Issue",
+    toolFeedbackEmail: "邮件联系支持",
   },
   filters: {
     "Most used": "最常用",

@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, X } from "lucide-react";
+import { Mail, Search, X } from "lucide-react";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { LocaleLink } from "@/components/locale-link";
 import { useLocale } from "@/components/locale-provider";
@@ -8,6 +8,7 @@ import { getMessages, type Messages } from "@/lib/messages";
 import { TOOLS, type ToolDefinition } from "@/lib/tools";
 import { useHydratedMostUsedToolIds } from "@/hooks/use-hydrated-most-used-tool-ids";
 import { getToolLucideIcon } from "@/lib/tool-lucide-icons";
+import { SITE_NAME, supportMailtoUrl } from "@/lib/site";
 import { useSearchModal } from "./search-modal-context";
 
 function matchesQuery(
@@ -84,6 +85,14 @@ function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
       : filteredTools.length === 0
         ? messages.site.searchModalNoResults.replace("{query}", query)
         : null;
+
+  const q = query.trim();
+  const suggestSubject = `[${SITE_NAME}] Tool suggestion`;
+  const suggestBody =
+    q.length > 0
+      ? `I searched for: "${q}"\n\nTool or workflow I'd like:\n\n`
+      : `Tool or workflow I'd like:\n\n`;
+  const suggestMailto = supportMailtoUrl(suggestSubject, suggestBody);
 
   return (
     <div
@@ -163,6 +172,29 @@ function ToolsSearchModalInner({ onClose }: { onClose: () => void }) {
                 ))}
               </div>
             )}
+          </div>
+
+          <div className="shrink-0 border-t border-neutral-200 bg-neutral-50/80 px-4 py-3 dark:border-neutral-700 dark:bg-neutral-950/50">
+            <div className="flex gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-100 dark:bg-indigo-950/80">
+                <Mail className="h-4 w-4 text-indigo-600 dark:text-indigo-400" aria-hidden />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">
+                  {messages.site.searchModalSuggestTitle}
+                </p>
+                <p className="mt-0.5 text-xs leading-snug text-neutral-600 dark:text-neutral-400">
+                  {messages.site.searchModalSuggestDescription}
+                </p>
+                <a
+                  href={suggestMailto}
+                  className="mt-2 inline-flex text-sm font-semibold text-indigo-600 underline-offset-2 hover:underline dark:text-indigo-400"
+                  onClick={onClose}
+                >
+                  {messages.site.searchModalSuggestEmailLabel}
+                </a>
+              </div>
+            </div>
           </div>
 
           <div className="border-t border-neutral-200 px-4 py-3 text-xs text-neutral-500 dark:border-neutral-700 dark:text-neutral-400">

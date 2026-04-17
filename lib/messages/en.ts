@@ -16,6 +16,14 @@ export const en: Messages = {
     searchModalStartTyping: "Start typing to search all tools",
     searchModalNoResults: 'No tools found matching "{query}"',
     searchModalFooter: "Press ESC to close",
+    searchModalSuggestTitle: "Don't see the tool you need?",
+    searchModalSuggestDescription:
+      "Tell us what you're looking for — we read every message and use requests to guide what we build next.",
+    searchModalSuggestEmailLabel: "Email support",
+    toolFeedbackHeading: "Feedback",
+    toolFeedbackBody: "Found a bug, unclear UX, or want a feature? Tell us on GitHub or by email.",
+    toolFeedbackGitHub: "Open GitHub issue",
+    toolFeedbackEmail: "Email support",
   },
   filters: {
     "Most used": "Most used",
