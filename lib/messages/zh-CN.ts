@@ -144,6 +144,12 @@ export const zhCN: Messages = {
       description: "校验地址并在本地应用 EIP-55 校验和",
       metaDescription: "在浏览器中校验以太坊地址并应用 EIP-55 校验和；不会发往服务器。",
     },
+    "eth-wallet": {
+      title: "钱包与靓号",
+      description: "靓号地址碰撞、概率与耗时估算，以及 BIP-39 助记词",
+      metaDescription:
+        "在浏览器本地搜索以太坊靓号地址并显示命中概率与期望耗时；生成或导入 BIP-39 助记词并推导地址；数据不上传服务器。",
+    },
     "function-selector": {
       title: "函数选择器（4 字节）",
       description: "由规范函数签名计算 4 字节选择器",

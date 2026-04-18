@@ -23,6 +23,7 @@ import {
   Sparkles,
   Square,
   Terminal,
+  Wallet,
 } from "lucide-react";
 
 /** Lucide icons for each tool id — matches Untitled / Figma bundle. */
@@ -47,6 +48,7 @@ export const TOOL_LUCIDE_ICONS: Record<string, LucideIcon> = {
   "uniswap-sqrt": Droplets,
   "wei-human": Coins,
   "eth-address": ContactRound,
+  "eth-wallet": Wallet,
   "function-selector": Code2,
   keccak256: Hash,
   "hex-bytes": FileCode,

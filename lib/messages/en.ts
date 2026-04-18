@@ -148,6 +148,12 @@ export const en: Messages = {
       metaDescription:
         "Validate Ethereum addresses and apply EIP-55 checksum in your browser. Nothing is sent to a server.",
     },
+    "eth-wallet": {
+      title: "Wallet & vanity",
+      description: "Vanity address search, odds, ETA, and BIP-39 mnemonics",
+      metaDescription:
+        "Search for Ethereum vanity addresses with probability and time estimates; generate or import BIP-39 mnemonics and derive addresses locally in your browser.",
+    },
     "function-selector": {
       title: "Function selector",
       description: "Compute the 4-byte selector from a function signature",

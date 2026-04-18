@@ -228,6 +228,15 @@ export const TOOLS: ToolDefinition[] = [
     status: "live",
   },
   {
+    id: "eth-wallet",
+    title: "Wallet & vanity",
+    description: "Vanity address search, odds, ETA, and BIP-39 mnemonics",
+    category: "Web3",
+    icon: "wallet-plus",
+    href: "/eth-wallet",
+    status: "live",
+  },
+  {
     id: "function-selector",
     title: "Function selector",
     description: "Compute the 4-byte selector from a function signature",
