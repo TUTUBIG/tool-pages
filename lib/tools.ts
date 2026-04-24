@@ -84,6 +84,15 @@ export const TOOLS: ToolDefinition[] = [
     status: "live",
   },
   {
+    id: "svg-to-ico",
+    title: "SVG & ICO",
+    description: "SVG ↔ ICO favicon: multi-size ICO, ICO to SVG with custom output dimensions",
+    category: "Design",
+    icon: "images",
+    href: "/svg-to-ico",
+    status: "live",
+  },
+  {
     id: "email-template",
     title: "Email Template",
     description: "Fill a responsive table layout and copy HTML for campaigns",

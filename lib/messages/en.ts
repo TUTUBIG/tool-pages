@@ -62,6 +62,12 @@ export const en: Messages = {
       description: "Shrink JPEG or WebP quality in the browser before upload",
       metaDescription: "Re-encode images in the browser with adjustable JPEG or WebP quality.",
     },
+    "svg-to-ico": {
+      title: "SVG & ICO",
+      description: "SVG ↔ ICO favicon: multi-size ICO, ICO to SVG with custom output dimensions",
+      metaDescription:
+        "Convert SVG to a multi-resolution ICO or extract a PNG layer from ICO into an SVG with custom width and height — all locally in your browser.",
+    },
     "email-template": {
       title: "Email Template",
       description: "Fill a responsive table layout and copy HTML for campaigns",

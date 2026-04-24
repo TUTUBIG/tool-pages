@@ -61,6 +61,12 @@ export const zhCN: Messages = {
       description: "在浏览器中降低 JPEG 或 WebP 质量以减小上传前体积",
       metaDescription: "在浏览器中重新编码图片，可调整 JPEG 或 WebP 质量。",
     },
+    "svg-to-ico": {
+      title: "SVG 与 ICO",
+      description: "SVG ↔ ICO 网站图标：多尺寸 ICO，ICO 导出 SVG 并可设输出宽高",
+      metaDescription:
+        "在浏览器中将 SVG 转为多分辨率 ICO，或从 ICO 中提取 PNG 图层封装为 SVG 并自定义显示尺寸；全部本地处理。",
+    },
     "email-template": {
       title: "邮件模板",
       description: "填写响应式表格布局并复制活动用 HTML",
