@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   ArrowLeftRight,
   Braces,
+  Clock,
   Cloud,
   Code,
   Code2,
@@ -43,6 +44,7 @@ export const TOOL_LUCIDE_ICONS: Record<string, LucideIcon> = {
   "jwt-tool": KeyRound,
   "hash-generator": Hash,
   "uuid-generator": Fingerprint,
+  unixtime: Clock,
   "format-converter": ArrowLeftRight,
   "unit-converter": Scale,
   "uniswap-sqrt": Droplets,

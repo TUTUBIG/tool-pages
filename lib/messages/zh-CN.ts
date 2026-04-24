@@ -116,6 +116,11 @@ export const zhCN: Messages = {
       description: "生成随机 UUID v4",
       metaDescription: "在浏览器中生成加密安全的 UUID v4 标识符。",
     },
+    unixtime: {
+      title: "Unix 时间戳",
+      description: "在浏览器中互转 Unix 时间戳与 ISO 日期",
+      metaDescription: "在浏览器本地在 Unix 纪元秒或毫秒与 ISO 8601 日期之间转换。",
+    },
     "format-converter": {
       title: "数据格式转换",
       description: "在 JSON、YAML、XML、CSV、TSV 之间互转",

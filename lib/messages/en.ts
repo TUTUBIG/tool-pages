@@ -118,6 +118,12 @@ export const en: Messages = {
       description: "Generate random UUID v4 identifiers",
       metaDescription: "Generate cryptographically random UUID version 4 identifiers in your browser.",
     },
+    unixtime: {
+      title: "Unix time",
+      description: "Convert Unix timestamps and ISO dates in your browser",
+      metaDescription:
+        "Convert between Unix epoch seconds or milliseconds and ISO 8601 dates locally in your browser.",
+    },
     "format-converter": {
       title: "Data Format Converter",
       description: "Convert JSON, YAML, XML, CSV, and TSV to each other",

@@ -183,6 +183,15 @@ export const TOOLS: ToolDefinition[] = [
     status: "live",
   },
   {
+    id: "unixtime",
+    title: "Unix time",
+    description: "Convert Unix timestamps and ISO dates in your browser",
+    category: "Development",
+    icon: "schedule",
+    href: "/unixtime",
+    status: "live",
+  },
+  {
     id: "format-converter",
     title: "Data Format Converter",
     description: "Convert JSON, YAML, XML, CSV, and TSV to each other",
