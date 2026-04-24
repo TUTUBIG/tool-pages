@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { getMessages, resolveLocale } from "@/lib/messages";
-import { SITE_NAME } from "@/lib/site";
-import { TOOLS } from "@/lib/tools";
 import { LOCALES, withLocale } from "@/lib/i18n";
+import { SITE_NAME, absoluteUrl } from "@/lib/site";
+import { TOOLS } from "@/lib/tools";
 
 function pathForToolId(toolId: string): string {
   const t = TOOLS.find((x) => x.id === toolId);
@@ -24,7 +24,7 @@ export function createToolMetadata(toolId: string) {
       return { title: SITE_NAME };
     }
     const languages = Object.fromEntries(
-      LOCALES.map((lo) => [lo, withLocale(lo, path)] as const),
+      LOCALES.map((lo) => [lo, absoluteUrl(withLocale(lo, path))] as const),
     ) as Record<string, string>;
     return {
       title: tool.title,

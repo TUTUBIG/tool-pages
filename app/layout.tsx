@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { SearchModalProvider } from "@/components/search-modal-context";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ToolsSearchModal } from "@/components/tools-search-modal";
-import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_NAME, getSiteOrigin } from "@/lib/site";
 import "./globals.css";
 
 const themeInitScript = `
@@ -40,8 +40,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteOrigin()),
   title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   description: SITE_DESCRIPTION,
+  robots: { index: true, follow: true },
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     apple: [{ url: "/favicon.svg", type: "image/svg+xml" }],

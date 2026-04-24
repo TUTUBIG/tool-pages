@@ -1,3 +1,16 @@
+/** Canonical origin for absolute URLs (metadataBase, sitemap, robots, JSON-LD). */
+export const SITE_CANONICAL_ORIGIN = "https://tools.fipulse.tech";
+
+export function getSiteOrigin(): string {
+  return SITE_CANONICAL_ORIGIN;
+}
+
+/** Absolute URL for a path starting with `/` (locale-prefixed paths from `withLocale`). */
+export function absoluteUrl(path: string): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${getSiteOrigin()}${p}`;
+}
+
 /** Public repo or org URL for the header link. Override with NEXT_PUBLIC_GITHUB_URL. */
 export const SITE_GITHUB_URL =
   process.env.NEXT_PUBLIC_GITHUB_URL ?? "https://github.com/TUTUBIG/tool-pages";
