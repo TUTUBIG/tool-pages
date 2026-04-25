@@ -77,7 +77,7 @@ export const TOOLS: ToolDefinition[] = [
   {
     id: "image-compressor",
     title: "Image Compressor",
-    description: "Shrink JPEG or WebP quality in the browser before upload",
+    description: "Export PNG, JPEG, WebP, or AVIF from raster or SVG in the browser before upload",
     category: "Design",
     icon: "image",
     href: "/image-compress",

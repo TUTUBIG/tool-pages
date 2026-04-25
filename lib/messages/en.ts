@@ -59,8 +59,9 @@ export const en: Messages = {
     },
     "image-compressor": {
       title: "Image Compressor",
-      description: "Shrink JPEG or WebP quality in the browser before upload",
-      metaDescription: "Re-encode images in the browser with adjustable JPEG or WebP quality.",
+      description: "Export PNG, JPEG, WebP, or AVIF from raster or SVG in the browser before upload",
+      metaDescription:
+        "Resize and export images or SVG (rasterized) as PNG, JPEG, WebP, or AVIF when supported, with quality control for lossy formats.",
     },
     "svg-to-ico": {
       title: "SVG & ICO",

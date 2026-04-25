@@ -58,8 +58,9 @@ export const zhCN: Messages = {
     },
     "image-compressor": {
       title: "图片压缩",
-      description: "在浏览器中降低 JPEG 或 WebP 质量以减小上传前体积",
-      metaDescription: "在浏览器中重新编码图片，可调整 JPEG 或 WebP 质量。",
+      description: "在浏览器中将位图或光栅化 SVG 导出为 PNG、JPEG、WebP 或 AVIF（若支持）",
+      metaDescription:
+        "在浏览器中缩放并导出 PNG、JPEG、WebP、AVIF（浏览器支持时）或光栅化 SVG，可为有损格式调节质量。",
     },
     "svg-to-ico": {
       title: "SVG 与 ICO",
